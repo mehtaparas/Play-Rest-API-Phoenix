@@ -90,4 +90,19 @@ class CustomerRepository @Inject()(implicit ec: DatabaseExecutionContext) {
 		rs
 	}
   }(ec)
+
+  def saveCustomer(siteid: Int, accountnbr: Int, node: String, host: String, headend: String): Future[String] = Future {
+
+    val conn = ugi.doAs(new PrivilegedExceptionAction[Connection] {
+      override def run(): Connection = {dataSource.getConnection}
+    })
+
+    val rowsAffected = conn.prepareStatement(s"upsert into UET.CI_ACCNT_NODE (SITE_ID, ACCOUNT_NBR, NODE_NAME, HOST_NAME, HEADEND) VALUES " +
+      s"($siteid, $accountnbr, '$node', '$host', '$headend')").executeUpdate()
+
+    conn.commit()
+    conn.close()
+    "Number of accounts updated: " + rowsAffected.toString
+
+  }(ec)
 }

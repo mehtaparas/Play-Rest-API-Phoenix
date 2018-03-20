@@ -45,8 +45,11 @@ class HomeController @Inject()(customerService: CustomerRepository,
     }
   }
 
-  def save = Action(parse.json) { request: Request[JsValue]  =>
-    Ok((request.body \ "name").as[String])
+  def save = Action.async(parse.json) { request: Request[JsValue]  =>
+    customerService.saveCustomer((request.body \ "site_id").as[Int],(request.body \ "account_nbr").as[Int],(request.body \ "node").as[String]
+      ,(request.body \ "host").as[String],(request.body \ "headend").as[String]).map {
+      responseString => Ok(responseString)
+    }
   }
 
 }
