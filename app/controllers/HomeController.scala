@@ -12,9 +12,6 @@ import play.api.libs.json._
 
 import scala.concurrent.{ExecutionContext, Future}
 
-/**
-  * Manage a database of computers
-  */
 class HomeController @Inject()(customerService: CustomerRepository,
                                cc: MessagesControllerComponents)(implicit ec: ExecutionContext)
   extends MessagesAbstractController(cc) {
@@ -45,10 +42,17 @@ class HomeController @Inject()(customerService: CustomerRepository,
     }
   }
 
+  /**
+    * Save a customer to UET.CI_ACCNT_NODE table in Phoenix based on JSON request body; example request body:
+    * 
+    * {"site_id": 1, "account_nbr": 123, "node": "TESTNODE123", "host": "TESTHOST123", "headend": "TESTHEADEND123"}
+    *
+    */
+
   def save = Action.async(parse.json) { request: Request[JsValue]  =>
     customerService.saveCustomer((request.body \ "site_id").as[Int],(request.body \ "account_nbr").as[Int],(request.body \ "node").as[String]
       ,(request.body \ "host").as[String],(request.body \ "headend").as[String]).map {
-      responseString => Ok(responseString)
+      responseString => Ok(Json.toJson(responseString))
     }
   }
 

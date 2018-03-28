@@ -1,0 +1,6 @@
+[0m[[0m[31merror[0m] [0m[0m/home/parmehta/Play-Rest-API-Phoenix/app/models/CustomerRepository.scala:94:120: type mismatch;[0m
+[0m[[0m[31merror[0m] [0m[0m found   : scala.concurrent.Future[models.SaveCustomerResponse][0m
+[0m[[0m[31merror[0m] [0m[0m required: scala.concurrent.Future[String][0m
+[0m[[0m[31merror[0m] [0m[0m  def saveCustomer(siteid: Int, accountnbr: Int, node: String, host: String, headend: String): Future[String] = Future {[0m
+[0m[[0m[31merror[0m] [0m[0m                                                                                                                       ^[0m
+[0m[[0m[31merror[0m] [0m[0mone error found[0m

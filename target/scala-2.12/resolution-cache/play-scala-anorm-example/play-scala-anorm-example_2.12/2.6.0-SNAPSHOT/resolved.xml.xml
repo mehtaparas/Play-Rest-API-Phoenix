@@ -4,7 +4,7 @@
 		module="play-scala-anorm-example_2.12"
 		revision="2.6.0-SNAPSHOT"
 		status="integration"
-		publication="20180320171456"
+		publication="20180327131824"
 	>
 		<description>
 		play-scala-anorm-example

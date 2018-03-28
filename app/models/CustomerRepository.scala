@@ -5,8 +5,8 @@ import javax.inject.Inject
 
 import scala.concurrent.Future
 
-import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.hbase.HBaseConfiguration;
+import org.apache.hadoop.conf.Configuration
+import org.apache.hadoop.hbase.HBaseConfiguration
 import org.apache.hadoop.security.UserGroupInformation
 
 import com.zaxxer.hikari.{HikariConfig, HikariDataSource}
@@ -20,7 +20,7 @@ import java.io.FileInputStream
 class CustomerRepository @Inject()(implicit ec: DatabaseExecutionContext) {
 
   val props = new Properties()
-  props.load(new FileInputStream("/home/parmehta/Play-Anorm-JDBC/conf/hikaricp/phoenix.properties"))
+  props.load(new FileInputStream("/home/parmehta/Play-Rest-API-Phoenix/conf/hikaricp/phoenix.properties"))
 
   System.setProperty("java.security.krb5.conf", props.getProperty("kerbConf"))
   System.setProperty("java.security.auth.login.config", props.getProperty("zkJaas"))
@@ -91,7 +91,7 @@ class CustomerRepository @Inject()(implicit ec: DatabaseExecutionContext) {
 	}
   }(ec)
 
-  def saveCustomer(siteid: Int, accountnbr: Int, node: String, host: String, headend: String): Future[String] = Future {
+  def saveCustomer(siteid: Int, accountnbr: Int, node: String, host: String, headend: String): Future[SaveCustomerResponse] = Future {
 
     val conn = ugi.doAs(new PrivilegedExceptionAction[Connection] {
       override def run(): Connection = {dataSource.getConnection}
@@ -102,7 +102,9 @@ class CustomerRepository @Inject()(implicit ec: DatabaseExecutionContext) {
 
     conn.commit()
     conn.close()
-    "Number of accounts updated: " + rowsAffected.toString
+    
+    // "Number of accounts updated: " + rowsAffected.toString
+    SaveCustomerResponse(rowsAffected)
 
   }(ec)
 }

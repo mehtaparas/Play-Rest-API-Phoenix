@@ -4,7 +4,7 @@
 		module="play-rest-api-phoenix-build"
 		revision="0.1.0-SNAPSHOT"
 		status="integration"
-		publication="20180320171419"
+		publication="20180322100414"
 		e:sbtVersion="1.0" e:scalaVersion="2.12"
 	>
 		<description>
